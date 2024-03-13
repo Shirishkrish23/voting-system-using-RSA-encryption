@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System</title>
+    <!-- Include Bootstrap CSS (you can use a CDN or local file) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Voting System</h2>
+
+        <!-- Display Candidates List -->
+        <div class="card mb-4">
+            <div class="card-header">
+                Candidates List
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for candidate in candidates %}
+                        <li class="list-group-item">
+                           <strong> Candidate ID</strong>: {{ candidate['candidate_id'] }},<strong> Candidate Name</strong>: {{ candidate['candidate_name'] }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <!-- Voter Registration Form -->
+        <div class="card mb-4">
+            <div class="card-header">
+                Register Voter
+            </div>
+            <div class="card-body">
+                <form action="/register_voter" method="post">
+                    <div class="mb-3">
+                        <label for="voter_id" class="form-label">Voter ID</label>
+                        <input type="number" class="form-control" id="voter_id" name="voter_id" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="voter_name" class="form-label">Voter Name</label>
+                        <input type="text" class="form-control" id="voter_name" name="voter_name" autocomplete="off" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register Voter</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Vote Casting Form -->
+        <div class="card">
+            <div class="card-header">
+                Cast Vote
+            </div>
+            <div class="card-body">
+                <form action="/vote" method="post">
+                    <div class="mb-3">
+                        <label for="voter_id_vote" class="form-label">Voter ID</label>
+                        <input type="number" class="form-control" id="voter_id_vote" name="voter_id" autocomplete="off" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="candidate_id_vote" class="form-label">Candidate ID</label>
+                        <input type="number" class="form-control" id="candidate_id_vote" name="candidate_id" autocomplete="off" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cast Vote</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Display Messages -->
+        {% if message %}
+            <div class="mt-4 alert alert-info" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+        
+        {% if vote_message %}
+            <div class="mt-4 alert alert-success" role="alert">
+                {{ vote_message }}
+            </div>
+        {% endif %}
+         <!-- Voting Over Button Form -->
+         <form action="{{ url_for('voting_over') }}" method="get">
+            <button type="submit" class="btn btn-danger mt-4">Voting Over</button>
+        </form>
+
+    </div>
+    
+    <!-- Include Bootstrap JS (you can use a CDN or local file) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
